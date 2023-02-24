@@ -1,6 +1,7 @@
 const catchAsync = require('./../utils/catchAsync')
 const AppError = require('./../utils/appError')
 const APIFetures = require('./../utils/apiFeatures')
+
 exports.deleteOne = Model =>catchAsync(async (req, res,next) => {
   const doc= await Model.findByIdAndDelete(req.params.id);
    if(!doc){
@@ -11,6 +12,7 @@ exports.deleteOne = Model =>catchAsync(async (req, res,next) => {
       data: null
 })
 })
+
 exports.updateOne = Model => catchAsync(async (req, res,next) => {
   const doc = await Model.findByIdAndUpdate(req.params.id, req.body,{
    new: true,
@@ -27,6 +29,7 @@ if(!doc){
    }
 })  
 })
+
 exports.createOne = Model =>catchAsync( async (req, res,next) => {
   const doc = await Model.create(req.body)
       res.status(201).json({
@@ -36,6 +39,7 @@ exports.createOne = Model =>catchAsync( async (req, res,next) => {
         }
   })
 })
+
 exports.getOne = (Model, popOptions) =>catchAsync(async (req,res,next) => {
   let query = Model.findById(req.params.id)
   if(popOptions) query = query.populate(popOptions)
@@ -51,6 +55,7 @@ exports.getOne = (Model, popOptions) =>catchAsync(async (req,res,next) => {
       }
       })
   })
+  
 exports.getAll = Model=>catchAsync(async (req,res,next) => {
   //to allow for nested get review on atour
   let filter = {};

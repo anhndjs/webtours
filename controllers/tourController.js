@@ -4,6 +4,7 @@ const APIFetures = require('./../utils/apiFeatures')
 const catchAsync = require('./../utils/catchAsync')
 const AppError = require('./../utils/appError')
 const factory = require('./handlerFactory')
+
 exports.aliasTopTours = (req, res,next ) =>{
        req.query.limit='5';
        req.query.sort='-ratingsAverage,price';
@@ -17,16 +18,6 @@ exports.getTours  = factory.getOne(Tour,{path:'reviews'})
 exports.createTour =factory.createOne(Tour)
 exports.updateTour = factory.updateOne(Tour)
 exports.deleteTour = factory.deleteOne(Tour);
-// exports.deleteTour =catchAsync(async (req, res,next) => {
-//         const tour= await Tour.findByIdAndDelete(req.params.id);
-//          if(!tour){
-//             return next(new AppError('no tour found with that id',404));
-//         }
-//         res.status(204).json({
-//             status: 'success',
-//             data: null
-//      })
-//      })
     
 exports.getTourStats =catchAsync( async (req, res,next)=>{
         const stats = await Tour.aggregate([
@@ -46,9 +37,6 @@ exports.getTourStats =catchAsync( async (req, res,next)=>{
             },{
                 $sort:{avgPrice:1}
             },
-            //{
-            //     $match:{_id:{$ne:'EASY'}}
-            // }
         ])
         res.status(201).json({
             status: 'success',
@@ -102,6 +90,7 @@ exports.getMonthlyPlan =catchAsync  ( async (req,res,next)=>{
             }
         })
     })
+
     exports.getToursWithin = catchAsync(async (req, res, next) => {
         const { distance, latlng, unit } = req.params;
         const [lat, lng] = latlng.split(',');
@@ -129,6 +118,7 @@ exports.getMonthlyPlan =catchAsync  ( async (req,res,next)=>{
           }
         });
       });
+      
 exports.getDistances = catchAsync(async (req, res, next) => {
     const {  latlng, unit } = req.params;
     const [lat, lng] = latlng.split(',');

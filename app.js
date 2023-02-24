@@ -23,10 +23,6 @@ app.set('views',path.join(__dirname, 'views'));
 //serving 
 
 // setting views/views engine
-
-
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(helmet());
 app.use(
